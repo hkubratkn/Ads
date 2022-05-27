@@ -1,0 +1,42 @@
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            BlueTheme {
+                val deviceCurrentWidth = LocalConfiguration.current.screenWidthDp.toInt()
+                Column(
+                    modifier= Modifier
+                        .padding(16.dp)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Text("Adaptive Banner")
+                    /**shows an adaptive banner test ad*/
+                    AndroidView(
+                        factory = {context->
+                            AdView(context).apply {
+                                adSize = AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+                                    context,
+                                    deviceCurrentWidth
+                                )
+                                adUnitId = context.getString(R.string.ad_id_adaptive_banner)
+                                loadAd(AdRequest.Builder().build())
+                            }
+                        }
+                    )
+                    Text(text ="Regular Banner" )
+                    /**shows a banner test ad*/
+                    AndroidView(
+                        factory = {context->
+                            AdView(context).apply {
+                                adSize = AdSize.BANNER
+                                adUnitId = context.getString(R.string.ad_id_banner)
+                                loadAd(AdRequest.Builder().build())
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
