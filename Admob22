@@ -1,0 +1,17 @@
+val context = LocalContext.current
+    MobileAds.initialize(context) { }
+    
+    
+         AndroidView(
+            factory = {
+                val aview = AdView(it)
+                aview.apply {
+                    aview.setAdSize(AdSize.BANNER)
+                    adUnitId = "ca-app-pub-3940256099942544/6300978111"
+                    loadAd(AdRequest.Builder().build())
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 5.dp)
+        )
